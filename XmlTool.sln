@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlTool.Core", "XmlTool.Core\XmlTool.Core.csproj", "{8BA0EE35-C8A4-472C-A7E6-37E3E7BA3661}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlTool.Desktop", "XmlTool.Desktop\XmlTool.Desktop.csproj", "{0D4DF802-A5EC-481B-B1DA-47C872840EFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8BA0EE35-C8A4-472C-A7E6-37E3E7BA3661}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BA0EE35-C8A4-472C-A7E6-37E3E7BA3661}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BA0EE35-C8A4-472C-A7E6-37E3E7BA3661}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BA0EE35-C8A4-472C-A7E6-37E3E7BA3661}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D4DF802-A5EC-481B-B1DA-47C872840EFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D4DF802-A5EC-481B-B1DA-47C872840EFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D4DF802-A5EC-481B-B1DA-47C872840EFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D4DF802-A5EC-481B-B1DA-47C872840EFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
