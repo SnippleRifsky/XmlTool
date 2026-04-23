@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -38,8 +39,14 @@ public partial class MainWindow : Window
             // Reads all the content of file as a text.
             var fileContent = await streamReader.ReadToEndAsync(); 
             _importDocument = XDocument.Parse(fileContent);
-             
-            
+
+            var extractedObjectsElement = _importDocument.Root?.Element("ExportedObjects");
+            var applicationElement = extractedObjectsElement?.Elements("OI")
+                .Where(n => n.Attribute("NAME")
+                                ?.Value ==
+                            "Application");
+
+            if (applicationElement != null) Console.WriteLine(applicationElement.Attributes().ToString());
         }
         catch (Exception e)
         {
