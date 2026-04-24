@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
+using XmlTool.Core;
 
 namespace XmlTool.Desktop;
 
@@ -21,11 +23,10 @@ public partial class MainWindow : Window
     {
         try
         {
-            // Get top level from the current control. Alternatively, you can use Window reference instead.
             var topLevel = GetTopLevel(this);
-
-            // Start async operation to open the dialog.
+            
             if (topLevel == null) return;
+            
             var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
             {
                 Title = "Open Text File",
@@ -33,20 +34,29 @@ public partial class MainWindow : Window
             });
 
             if (files.Count != 1) return;
-            // Open reading stream from the first file.
+            
             await using var stream = await files[0].OpenReadAsync();
             using var streamReader = new StreamReader(stream);
-            // Reads all the content of file as a text.
+
             var fileContent = await streamReader.ReadToEndAsync(); 
             _importDocument = XDocument.Parse(fileContent);
+            
+            
+            var exportedObjectsElement = _importDocument.Root?.Element("ExportedObjects");
 
-            var extractedObjectsElement = _importDocument.Root?.Element("ExportedObjects");
-            var applicationElement = extractedObjectsElement?.Elements("OI")
-                .Where(n => n.Attribute("NAME")
-                                ?.Value ==
-                            "Application");
+            var deviceElement = ParseLib.GetElement(
+                "OI", 
+                "TYPE", 
+                "bacnet.DeviceProxy", 
+                exportedObjectsElement);
+            var deviceObject = new BacnetDevice(deviceElement);
+            var applicationObject = deviceObject.DeviceApplication;
 
-            if (applicationElement != null) Console.WriteLine(applicationElement.Attributes().ToString());
+            foreach (var point in applicationObject.BacnetPoints)
+            {
+                Console.WriteLine(point.Name);
+            }
+            Console.Write(applicationObject.BacnetPoints.Count);
         }
         catch (Exception e)
         {
