@@ -5,11 +5,14 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using XmlTool.Core;
+using XmlTool.Desktop.ViewModels;
 
 namespace XmlTool.Desktop;
 
 public partial class MainWindow : Window
 {
+    public string DeviceName = string.Empty;
+    
     public MainWindow()
     {
         InitializeComponent();
@@ -39,7 +42,6 @@ public partial class MainWindow : Window
             var fileContent = await streamReader.ReadToEndAsync(); 
             _importDocument = XDocument.Parse(fileContent);
             
-            
             var exportedObjectsElement = _importDocument.Root?.Element("ExportedObjects");
 
             var deviceElement = ParseLib.GetElement(
@@ -47,14 +49,17 @@ public partial class MainWindow : Window
                 "TYPE", 
                 "bacnet.DeviceProxy", 
                 exportedObjectsElement);
+            
             var deviceObject = new BacnetDevice(deviceElement);
-            var applicationObject = deviceObject.DeviceApplication;
-
-            foreach (var point in applicationObject.BacnetPoints)
+            DataContext = new DeviceViewModel
             {
-                Console.WriteLine(point.Name);
-            }
-            Console.Write(applicationObject.BacnetPoints.Count);
+                DeviceName = deviceObject.Name,
+                DeviceDescription = deviceObject.Description,
+                PointCount = deviceObject.DeviceApplication.BacnetPoints.Count,
+                PointsList = deviceObject.DeviceApplication.BacnetPoints,
+            };
+            var applicationObject = deviceObject.DeviceApplication;
+            DeviceName = deviceObject.Name;
         }
         catch (Exception e)
         {
