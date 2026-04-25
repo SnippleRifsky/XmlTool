@@ -8,34 +8,83 @@
         Title="XmlTool.Desktop"
         x:DataType="vm:DeviceViewModel">
     
-        <StackPanel>
-            <GroupBox Header="Import a BACnet Device xml file" 
-                      CornerRadius="6" Height="150" Width="400"
-                      VerticalAlignment="Top" HorizontalAlignment="Left"
-                      Margin="8">
+        <Grid RowDefinitions="Auto,*">
+            <StackPanel 
+                Orientation="Horizontal">
+                <GroupBox Header="Import a BACnet Device xml file" 
+                          CornerRadius="6" Height="150" Width="400"
+                          VerticalAlignment="Top" HorizontalAlignment="Left"
+                          Margin="8">
                     <StackPanel Spacing="8">
-                            <Button Content="Browse" Click="OnLoadClick"/>
-                            <StackPanel Orientation="Vertical">
-                                    <TextBlock VerticalAlignment="Center" 
-                                               Text="{Binding DeviceName, 
+                        <Button Content="Browse" Click="OnLoadClick"/>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock VerticalAlignment="Center" 
+                                       Text="{Binding DeviceName, 
                                                StringFormat='Device Name: {0}'}"/>
-                                    <TextBlock VerticalAlignment="Center" 
-                                               Text="{Binding DeviceDescription, 
+                            <TextBlock VerticalAlignment="Center" 
+                                       Text="{Binding DeviceDescription, 
                                                StringFormat='Device Description: {0}'}"/>
-                                    <TextBlock VerticalAlignment="Center" 
-                                               Text="{Binding PointCount, 
+                            <TextBlock VerticalAlignment="Center" 
+                                       Text="{Binding PointCount, 
                                                StringFormat='Number of Points: {0}'}"/>
-                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
-            </GroupBox>
-        
-            <DataGrid ItemsSource="{Binding PointsList}"
-                      AutoGenerateColumns="True"
+                </GroupBox>
+                <GroupBox 
+                    Header="Site Info"
+                    Margin="8"
+                    Width ="250">
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto, Auto, Auto, Auto">
+                            <Label Grid.Column="0" Grid.Row="0" Content="Site Name:"
+                                   VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Grid.Row="0" x:Name="SiteNameText"
+                                     Height="20"
+                                     VerticalAlignment="Top"/>
+                            <Label Grid.Column="0" Grid.Row="1" Content="Area Name:"
+                                   VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Grid.Row="1" x:Name="AreaNameText"
+                                     Height="20"
+                                     VerticalAlignment="Top"/>
+                            <Label Grid.Column="0" Grid.Row="2" Content="Equip. Enumeration:"
+                                   VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Grid.Row="2" x:Name="EquipEnumText"
+                                     Height="20"
+                                     VerticalAlignment="Top"/>
+                            <TextBlock 
+                                Grid.Column="0" 
+                                Grid.Row="3"
+                                FontSize="12"
+                                Text="Ex: '1,4;A,D'&#10;Gives 16 names,&#10;1A through 4D"/>
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
+            
+            <DataGrid Grid.Row="1" ItemsSource="{Binding PointsList}"
                       GridLinesVisibility="All"
                       Margin="8"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top">
-                
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn 
+                        Header="Select"
+                        Binding="{Binding  IsSelected}"
+                        IsReadOnly="False"/>
+                    <DataGridTextColumn
+                        Header="Name"
+                        Binding="{Binding Name}"
+                        IsReadOnly="True"
+                        />
+                    <DataGridTextColumn
+                        Header="Description"
+                        Binding="{Binding Description}"
+                        IsReadOnly="True"
+                    />
+                    <DataGridTextColumn
+                        Header="Type"
+                        Binding="{Binding Type}"
+                        IsReadOnly="True"
+                    />
+                </DataGrid.Columns>
             </DataGrid>
-        </StackPanel>
+        </Grid>
 </Window>
