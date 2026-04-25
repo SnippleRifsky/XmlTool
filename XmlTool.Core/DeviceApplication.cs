@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Collections.ObjectModel;
+using System.Xml.Linq;
 
 namespace XmlTool.Core;
 
@@ -7,7 +8,7 @@ public class DeviceApplication
     public XElement ApplicationElement { get; set; } = new XElement("UnknownApplication");
     public ApplicationContentType ContentType { get; set; } = new ApplicationContentType();
     public int UseContentTypeFromRule { get; set; } = 0;
-    public List<BacnetPoint> BacnetPoints { get; set; } = [];
+    public ObservableCollection<BacnetPoint> BacnetPoints { get; set; } = [];
 
     public DeviceApplication(XElement applicationElement)
     {
@@ -38,24 +39,25 @@ public class DeviceApplication
         return ParseLib.ParseInt(typeFromRuleElement, "Value");
     }
 
-    private List<BacnetPoint> GetBacnetPoints(XElement element)
+    private ObservableCollection<BacnetPoint> GetBacnetPoints(XElement element)
     {
         var pointsElements = ParseLib.GetElements(
             "OI","TYPE",
             "bacnet.pointproxy", 
             element);
 
-        var pointsList = new List<BacnetPoint>();
+        var pointsList = new ObservableCollection<BacnetPoint>();
         if (pointsElements != null)
-            pointsList.AddRange(pointsElements.Select(point => new BacnetPoint
+            foreach (var pointElement in pointsElements)
             {
-                Name = ParseLib.ParseString(point,
-                    "NAME"),
-                Description = ParseLib.ParseString(point,
-                    "DESCR"),
-                Type = ParseLib.ParseString(point,
-                    "TYPE")
-            }));
+                pointsList.Add(new BacnetPoint
+                {
+                    Name = ParseLib.ParseString(pointElement, "NAME"),
+                    Description = ParseLib.ParseString(pointElement, "DESCR"),
+                    Type = ParseLib.ParseString(pointElement, "TYPE")
+                });
+            }
+
         return pointsList;
     }
 }
