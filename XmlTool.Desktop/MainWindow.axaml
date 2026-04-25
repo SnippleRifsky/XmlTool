@@ -8,28 +8,34 @@
         Title="XmlTool.Desktop"
         x:DataType="vm:DeviceViewModel">
     
-        <GroupBox Header="Import a BACnet Device xml file" 
-                  CornerRadius="6" Height="150" Width="400"
-                  VerticalAlignment="Top" HorizontalAlignment="Left"
-                  Margin="8">
-                <StackPanel Spacing="8">
-                        <Button Content="Browse" Click="OnLoadClick"/>
-                        <StackPanel Orientation="Vertical">
-                                <TextBlock VerticalAlignment="Center" 
-                                           Text="{Binding DeviceName, 
-                                           StringFormat='Device Name: {0}'}"/>
-                                <TextBlock VerticalAlignment="Center" 
-                                           Text="{Binding DeviceDescription, 
-                                           StringFormat='Device Description: {0}'}"/>
-                                <TextBlock VerticalAlignment="Center" 
-                                           Text="{Binding PointCount, 
-                                           StringFormat='Number of Points: {0}'}"/>
-                        </StackPanel>
-                </StackPanel>
-                <DataGrid Margin="8" ItemsSource="{Binding PointsList}"
-                          AutoGenerateColumns="True" IsReadOnly="True"
-                          GridLinesVisibility="All">
-                    
-                </DataGrid>
-        </GroupBox>
+        <StackPanel>
+            <GroupBox Header="Import a BACnet Device xml file" 
+                      CornerRadius="6" Height="150" Width="400"
+                      VerticalAlignment="Top" HorizontalAlignment="Left"
+                      Margin="8">
+                    <StackPanel Spacing="8">
+                            <Button Content="Browse" Click="OnLoadClick"/>
+                            <StackPanel Orientation="Vertical">
+                                    <TextBlock VerticalAlignment="Center" 
+                                               Text="{Binding DeviceName, 
+                                               StringFormat='Device Name: {0}'}"/>
+                                    <TextBlock VerticalAlignment="Center" 
+                                               Text="{Binding DeviceDescription, 
+                                               StringFormat='Device Description: {0}'}"/>
+                                    <TextBlock VerticalAlignment="Center" 
+                                               Text="{Binding PointCount, 
+                                               StringFormat='Number of Points: {0}'}"/>
+                            </StackPanel>
+                    </StackPanel>
+            </GroupBox>
+        
+            <DataGrid ItemsSource="{Binding PointsList}"
+                      AutoGenerateColumns="True"
+                      GridLinesVisibility="All"
+                      Margin="8"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top">
+                
+            </DataGrid>
+        </StackPanel>
 </Window>
