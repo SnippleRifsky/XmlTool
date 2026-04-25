@@ -11,8 +11,6 @@ namespace XmlTool.Desktop;
 
 public partial class MainWindow : Window
 {
-    public string DeviceName = string.Empty;
-    
     public MainWindow()
     {
         InitializeComponent();
@@ -58,8 +56,6 @@ public partial class MainWindow : Window
                 PointCount = deviceObject.DeviceApplication.BacnetPoints.Count,
                 PointsList = deviceObject.DeviceApplication.BacnetPoints,
             };
-            var applicationObject = deviceObject.DeviceApplication;
-            DeviceName = deviceObject.Name;
         }
         catch (Exception e)
         {
