@@ -2,6 +2,7 @@
 
 public class BacnetPoint
 {
+    public bool IsSelected { get; set; } = false;
     public string? Name { get; set; } = string.Empty;
     public string? Description { get; set; } = string.Empty;
     public string? Type { get; set; } = string.Empty;
