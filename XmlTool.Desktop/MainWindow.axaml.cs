@@ -49,6 +49,10 @@ public partial class MainWindow : Window
                 exportedObjectsElement);
             
             var deviceObject = new BacnetDevice(deviceElement);
+            if (DataContext is DeviceViewModel vm)
+            {
+                vm.AreaNames.Add(string.Empty);
+            }
             DataContext = new DeviceViewModel
             {
                 DeviceName = deviceObject.Name,
@@ -56,10 +60,19 @@ public partial class MainWindow : Window
                 PointCount = deviceObject.DeviceApplication.BacnetPoints.Count,
                 PointsList = deviceObject.DeviceApplication.BacnetPoints,
             };
+            SiteInfoPanel.IsVisible = true;
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
+        }
+    }
+
+    private void OnAddAreaNameClick(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is DeviceViewModel vm)
+        {
+            vm.AreaNames.Add(" ");
         }
     }
 }

@@ -8,12 +8,10 @@
         Title="XmlTool.Desktop"
         x:DataType="vm:DeviceViewModel">
     
-        <Grid RowDefinitions="Auto,*">
-            <StackPanel 
-                Orientation="Horizontal">
-                <GroupBox Header="Import a BACnet Device xml file" 
-                          CornerRadius="6" Height="150" Width="400"
-                          VerticalAlignment="Top" HorizontalAlignment="Left"
+        <Grid RowDefinitions="Auto,*,Auto,Auto">
+            <Grid ColumnDefinitions="*,*">
+                <GroupBox Grid.Column="0" Header="Import a BACnet Device xml file" 
+                          CornerRadius="6"
                           Margin="8">
                     <StackPanel Spacing="8">
                         <Button Content="Browse" Click="OnLoadClick"/>
@@ -30,34 +28,36 @@
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox 
+                <GroupBox Grid.Column="1" x:Name="SiteInfoPanel"
                     Header="Site Info"
                     Margin="8"
-                    Width ="250">
+                    CornerRadius="6"
+                    IsVisible="False">
                     <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto, Auto, Auto, Auto">
                             <Label Grid.Column="0" Grid.Row="0" Content="Site Name:"
                                    VerticalAlignment="Center"/>
                             <TextBox Grid.Column="1" Grid.Row="0" x:Name="SiteNameText"
-                                     Height="20"
                                      VerticalAlignment="Top"/>
                             <Label Grid.Column="0" Grid.Row="1" Content="Area Name:"
                                    VerticalAlignment="Center"/>
-                            <TextBox Grid.Column="1" Grid.Row="1" x:Name="AreaNameText"
-                                     Height="20"
-                                     VerticalAlignment="Top"/>
-                            <Label Grid.Column="0" Grid.Row="2" Content="Equip. Enumeration:"
+                            <StackPanel Grid.Column="1" Grid.Row="1" Spacing="4">
+                                <Button Content="+" Click="OnAddAreaNameClick"/>
+                                <ItemsControl ItemsSource="{Binding AreaNames}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding}" 
+                                                     TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                            <Label Grid.Column="0" Grid.Row="2" Content="Equipment ID:"
                                    VerticalAlignment="Center"/>
                             <TextBox Grid.Column="1" Grid.Row="2" x:Name="EquipEnumText"
-                                     Height="20"
                                      VerticalAlignment="Top"/>
-                            <TextBlock 
-                                Grid.Column="0" 
-                                Grid.Row="3"
-                                FontSize="12"
-                                Text="Ex: '1,4;A,D'&#10;Gives 16 names,&#10;1A through 4D"/>
                     </Grid>
                 </GroupBox>
-            </StackPanel>
+            </Grid>
             
             <DataGrid Grid.Row="1" ItemsSource="{Binding PointsList}"
                       GridLinesVisibility="All"
@@ -86,5 +86,11 @@
                     />
                 </DataGrid.Columns>
             </DataGrid>
+            <Label Grid.Row="2" Content="{Binding SelectedPoints.Count, StringFormat='Selected Points:{0}'}"/>
+            <Button Grid.Row="3" 
+                    Content="Next" 
+                    HorizontalAlignment="Left" 
+                    Margin="8"
+                    />
         </Grid>
 </Window>
