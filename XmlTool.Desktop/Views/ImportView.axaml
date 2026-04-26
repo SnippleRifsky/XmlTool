@@ -1,0 +1,104 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:XmlTool.Desktop.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="XmlTool.Desktop.Views.ImportView"
+             x:DataType="vm:ImportViewModel">
+    <Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
+            <TabStrip Grid.Row="0">
+                <TabStripItem Content="Import"/>
+                <TabStripItem Content="Point Naming"/>
+                <TabStripItem Content="Content"/>
+                <TabStripItem Content="Export"/>
+            </TabStrip>
+            <Grid Grid.Row="1" ColumnDefinitions="*,*">
+                <GroupBox Grid.Column="0" Header="Import a BACnet Device xml file" 
+                          CornerRadius="6"
+                          Margin="8">
+                    <StackPanel Spacing="8">
+                        <Button Content="Browse" Click="OnLoadClick"/>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock VerticalAlignment="Center" 
+                                       Text="{Binding DeviceName, 
+                                               StringFormat='Device Name: {0}'}"/>
+                            <TextBlock VerticalAlignment="Center" 
+                                       Text="{Binding DeviceDescription, 
+                                               StringFormat='Device Description: {0}'}"/>
+                            <TextBlock VerticalAlignment="Center" 
+                                       Text="{Binding PointCount, 
+                                               StringFormat='Number of Points: {0}'}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Grid.Column="1" x:Name="SiteInfoPanel"
+                    Header="Site Info"
+                    Margin="8"
+                    CornerRadius="6"
+                    IsVisible="False">
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto, Auto, Auto, Auto">
+                            <Label Grid.Column="0" Grid.Row="0" Content="Site Name:"
+                                   VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Grid.Row="0" x:Name="SiteNameText"
+                                     VerticalAlignment="Top"/>
+                            <Label Grid.Column="0" Grid.Row="1" Content="Area Name:"
+                                   VerticalAlignment="Center"/>
+                            <StackPanel Grid.Column="1" Grid.Row="1" Spacing="4">
+                                <Button Content="+" Click="OnAddAreaNameClick"/>
+                                <ItemsControl ItemsSource="{Binding AreaNames}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding}" 
+                                                     TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                            <Label Grid.Column="0" Grid.Row="2" Content="Equipment ID:"
+                                   VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Grid.Row="2" x:Name="EquipEnumText"
+                                     VerticalAlignment="Top"/>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+            
+            <DataGrid Grid.Row="2" ItemsSource="{Binding PointsList}"
+                      GridLinesVisibility="All"
+                      Margin="8"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Select">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected}" 
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn
+                        Header="Name"
+                        Binding="{Binding Name}"
+                        IsReadOnly="True"
+                        />
+                    <DataGridTextColumn
+                        Header="Description"
+                        Binding="{Binding Description}"
+                        IsReadOnly="True"
+                    />
+                    <DataGridTextColumn
+                        Header="Type"
+                        Binding="{Binding Type}"
+                        IsReadOnly="True"
+                    />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Grid.Row="3" 
+                    Content="Next" 
+                    HorizontalAlignment="Left" 
+                    Margin="8"
+                    />
+        </Grid>
+</UserControl>

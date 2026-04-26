@@ -5,7 +5,7 @@ using XmlTool.Core;
 
 namespace XmlTool.Desktop.ViewModels;
 
-public class DeviceViewModel : INotifyPropertyChanged
+public class ImportViewModel : INotifyPropertyChanged
 {
     public string DeviceName { get; set; }
     public string DeviceDescription { get; set; }

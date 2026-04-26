@@ -22,4 +22,11 @@
     <ItemGroup>
       <ProjectReference Include="..\XmlTool.Core\XmlTool.Core.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="MainWindow.axaml.cs">
+        <DependentUpon>ImportView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
 </Project>
