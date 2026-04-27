@@ -50,7 +50,7 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <TextBox Text="{Binding}" 
-                                                     TextAlignment="Center"/>
+                                                     TextAlignment="Left"/>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
