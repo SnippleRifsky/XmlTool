@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Xml.Linq;
+using XmlTool.Core.PointTypes;
 
 namespace XmlTool.Core;
 
@@ -50,6 +51,27 @@ public class DeviceApplication
         if (pointsElements != null)
             foreach (var pointElement in pointsElements)
             {
+                var pointType = ParseLib.ParseString(pointElement, "TYPE");
+                switch (pointType)
+                {
+                    case "bacnet.pointproxy.analog.Input":
+                        pointsList.Add(new AnalogInput(pointElement));
+                        break;
+                    case "bacnet.pointproxy.analog.Value":
+                        pointsList.Add(new AnalogValue(pointElement));
+                        break;
+                    case "bacnet.pointproxy.digital.Input":
+                        pointsList.Add(new DigitalInput(pointElement));
+                        break;
+                    default:
+                        pointsList.Add(new BacnetPoint
+                        {
+                            Name = ParseLib.ParseString(pointElement, "NAME"),
+                            Description = ParseLib.ParseString(pointElement, "DESCR"),
+                            Type = pointType
+                        });
+                        break;
+                }
                 pointsList.Add(new BacnetPoint
                 {
                     Name = ParseLib.ParseString(pointElement, "NAME"),
