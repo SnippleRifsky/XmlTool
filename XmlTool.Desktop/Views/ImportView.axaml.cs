@@ -51,15 +51,13 @@ public partial class ImportView : UserControl
             var deviceObject = new BacnetDevice(deviceElement);
             if (DataContext is ImportViewModel vm)
             {
+                vm.DeviceName = deviceObject.Name;
+                vm.DeviceDescription = deviceObject.Description;
+                vm.PointCount = deviceObject.DeviceApplication.BacnetPoints.Count;
+                vm.PointsList = deviceObject.DeviceApplication.BacnetPoints;
+                
                 vm.AreaNames.Add(string.Empty);
             }
-            DataContext = new ImportViewModel
-            {
-                DeviceName = deviceObject.Name,
-                DeviceDescription = deviceObject.Description,
-                PointCount = deviceObject.DeviceApplication.BacnetPoints.Count,
-                PointsList = deviceObject.DeviceApplication.BacnetPoints,
-            };
             SiteInfoPanel.IsVisible = true;
         }
         catch (Exception e)

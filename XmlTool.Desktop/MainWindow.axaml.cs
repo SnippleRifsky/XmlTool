@@ -8,9 +8,14 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        DataContext = new MainViewModel
+        DataContext = new MainViewModel();
+    
+        this.Loaded += (_, _) =>
         {
-            CurrentViewModel = new ImportViewModel()
+            if (DataContext is MainViewModel vm)
+            {
+                vm.Initialize();
+            }
         };
     }
 }

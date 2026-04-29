@@ -6,13 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="XmlTool.Desktop.Views.ImportView"
              x:DataType="vm:ImportViewModel">
-    <Grid RowDefinitions="Auto,Auto,*,Auto">
-            <TabStrip Grid.Row="0">
-                <TabStripItem Content="Import"/>
-                <TabStripItem Content="Point Naming"/>
-                <TabStripItem Content="Content"/>
-                <TabStripItem Content="Export"/>
-            </TabStrip>
+    <Grid RowDefinitions="Auto,Auto,*">
             <Grid Grid.Row="1" ColumnDefinitions="*,*">
                 <GroupBox Grid.Column="0" Header="Import a BACnet Device xml file" 
                           CornerRadius="6"

@@ -9,13 +9,34 @@
         x:Class="XmlTool.Desktop.MainWindow"
         Title="XmlTool.Desktop"
         x:DataType="vm:MainViewModel">
-        
+
         <Window.DataTemplates>
                 <DataTemplate DataType="vm:ImportViewModel">
                         <views:ImportView />
                 </DataTemplate>
+
+                <DataTemplate DataType="vm:NamingViewModel">
+                        <views:NamingView />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:ContentViewModel">
+                        <views:ContentView />
+                </DataTemplate>
+
+                <DataTemplate DataType="vm:ExportViewModel">
+                        <views:ExportView />
+                </DataTemplate>
         </Window.DataTemplates>
         
-        <ContentControl Content="{Binding CurrentViewModel}"/>
+        <Grid RowDefinitions="Auto,*">
+                <TabControl Grid.Row="0"
+                            SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
+                <TabItem Header="Import"/>
+                <TabItem Header="Point Naming"/>
+                <TabItem Header="Content"/>
+                <TabItem Header="Export"/>
+        </TabControl>
 
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" />
+        </Grid>
 </Window>
