@@ -69,7 +69,7 @@ public partial class ImportView : UserControl
 
     private BacnetDevice GetDevice(XDocument document)
     {
-        var exportedObjectsElement = _importDocument.Root?.Element("ExportedObjects");
+        var exportedObjectsElement = document.Root?.Element("ExportedObjects");
 
         var deviceElement = ParseLib.GetElement(
             "OI", 
