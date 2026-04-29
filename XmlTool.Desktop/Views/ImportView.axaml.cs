@@ -70,6 +70,7 @@ public partial class ImportView : UserControl
     private BacnetDevice GetDevice(XDocument document)
     {
         var exportedObjectsElement = document.Root?.Element("ExportedObjects");
+        var typesElement = document.Root?.Element("Types");
 
         var deviceElement = ParseLib.GetElement(
             "OI", 
@@ -77,6 +78,6 @@ public partial class ImportView : UserControl
             "bacnet.DeviceProxy", 
             exportedObjectsElement);
             
-        return new BacnetDevice(deviceElement);
+        return new BacnetDevice(deviceElement, typesElement);
     }
 }

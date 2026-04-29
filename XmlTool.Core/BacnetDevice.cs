@@ -5,14 +5,16 @@ namespace XmlTool.Core;
 public class BacnetDevice
 {
     public XElement? DeviceElement { get; private set; }
+    public XElement? TypesElement { get; private set; }
     public string? Name { get; private set; }
     public string? Description { get; private set; }
     public DeviceProperties Properties { get; private set; }
     public DeviceApplication DeviceApplication { get; set; }
 
-    public BacnetDevice(XElement deviceElement)
+    public BacnetDevice(XElement deviceElement, XElement typesElement)
     {
         DeviceElement = deviceElement;
+        TypesElement = typesElement;
         Name = deviceElement.Attribute("NAME")?.Value;
         Description = deviceElement.Attribute("DESCR")?.Value;
         Properties = GetDeviceProperties(deviceElement);
