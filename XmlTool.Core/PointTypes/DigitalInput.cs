@@ -6,8 +6,7 @@ public class DigitalInput : BacnetPoint
 {
     public string ActiveText { get; set; }
     public string AlarmMessage { get; set; }
-    // TODO parse enums from XML to reference in points
-    // AlarmValue
+    public AlarmValue AlarmValue { get; set; }
     public string BACnetName { get; set; }
     public string DeviceType { get; set; }
     public int EventEnable { get; set; }
@@ -18,12 +17,17 @@ public class DigitalInput : BacnetPoint
     public int Polarity { get; set; }
     public string ResetMessage { get; set; }
     public int TimeDelay { get; set; }
-    //Value
+    public string Value { get; set; }
 
     public DigitalInput(XElement pointElement)
     {
         ActiveText = ParseLib.GetProperty(pointElement, "ActiveText", "Value").Value;
         AlarmMessage = ParseLib.GetProperty(pointElement, "AlarmMessage", "Value").Value;
+        AlarmValue = new AlarmValue
+        {
+            Type = ParseLib.GetProperty(pointElement, "AlarmValue", "Type").Value,
+            Value = int.Parse(ParseLib.GetProperty(pointElement, "AlarmValue", "Value").Value)
+        };
         BACnetName = ParseLib.GetProperty(pointElement, "BACnetName", "Value").Value;
         DeviceType = ParseLib.GetProperty(pointElement, "DeviceType", "Value").Value;
         EventEnable = int.Parse(ParseLib.GetProperty(pointElement, "EventEnable", "Value").Value);
@@ -34,5 +38,12 @@ public class DigitalInput : BacnetPoint
         Polarity = int.Parse(ParseLib.GetProperty(pointElement, "Polarity", "Value").Value);
         ResetMessage = ParseLib.GetProperty(pointElement, "ResetMessage", "Value").Value;
         TimeDelay = int.Parse(ParseLib.GetProperty(pointElement, "TimeDelay", "Value").Value);
+        Value = ParseLib.GetProperty(pointElement, "Value", "Value").Value;
     }
+}
+
+public record AlarmValue
+{
+    public string Type { get; set; }
+    public int Value { get; set; }
 }
