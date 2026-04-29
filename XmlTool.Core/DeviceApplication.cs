@@ -63,21 +63,18 @@ public class DeviceApplication
                     case "bacnet.pointproxy.digital.Input":
                         pointsList.Add(new DigitalInput(pointElement));
                         break;
+                    case "bacnet.pointproxy.multistate.Value":
+                        pointsList.Add(new MultistateValue(pointElement));
+                        break;
                     default:
                         pointsList.Add(new BacnetPoint
                         {
                             Name = ParseLib.ParseString(pointElement, "NAME"),
                             Description = ParseLib.ParseString(pointElement, "DESCR"),
-                            Type = pointType
+                            Type = ParseLib.ParseString(pointElement, "TYPE")
                         });
                         break;
                 }
-                pointsList.Add(new BacnetPoint
-                {
-                    Name = ParseLib.ParseString(pointElement, "NAME"),
-                    Description = ParseLib.ParseString(pointElement, "DESCR"),
-                    Type = ParseLib.ParseString(pointElement, "TYPE")
-                });
             }
 
         return pointsList;
