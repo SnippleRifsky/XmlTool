@@ -38,7 +38,7 @@ public class DigitalInput : BacnetPoint
         Polarity = int.Parse(ParseLib.GetProperty(pointElement, "Polarity", "Value").Value);
         ResetMessage = ParseLib.GetProperty(pointElement, "ResetMessage", "Value").Value;
         TimeDelay = int.Parse(ParseLib.GetProperty(pointElement, "TimeDelay", "Value").Value);
-        Value = ParseLib.GetProperty(pointElement, "Value", "Value").Value;
+        Value = ParseLib.GetProperty(pointElement, "Value", "Type").Value;
     }
 }
 

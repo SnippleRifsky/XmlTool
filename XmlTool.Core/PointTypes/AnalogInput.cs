@@ -62,7 +62,7 @@ public class AnalogInput : BacnetPoint
         Resolution = float.Parse(ParseLib.GetProperty(pointElement, "Resolution", "Value").Value);
         TimeDelay = int.Parse(ParseLib.GetProperty(pointElement, "TimeDelay", "Value").Value);
         UpdateInterval = int.Parse(ParseLib.GetProperty(pointElement, "UpdateInterval", "Value").Value);
-        Value = ParseLib.GetProperty(pointElement, "Value", "Value").Value;
+        Value = ParseLib.GetProperty(pointElement, "Value", "Unit").Value;
     }
 }
 
