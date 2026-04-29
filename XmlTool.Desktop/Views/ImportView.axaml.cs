@@ -37,18 +37,11 @@ public partial class ImportView : UserControl
             await using var stream = await files[0].OpenReadAsync();
             using var streamReader = new StreamReader(stream);
 
-            var fileContent = await streamReader.ReadToEndAsync(); 
-            _importDocument = XDocument.Parse(fileContent);
+            var fileContent = await streamReader.ReadToEndAsync();
             
-            var exportedObjectsElement = _importDocument.Root?.Element("ExportedObjects");
-
-            var deviceElement = ParseLib.GetElement(
-                "OI", 
-                "TYPE", 
-                "bacnet.DeviceProxy", 
-                exportedObjectsElement);
+            var deviceObject = GetDevice(XDocument.Parse(fileContent));
             
-            var deviceObject = new BacnetDevice(deviceElement);
+            
             if (DataContext is ImportViewModel vm)
             {
                 vm.DeviceName = deviceObject.Name;
@@ -72,5 +65,18 @@ public partial class ImportView : UserControl
         {
             vm.AreaNames.Add(" ");
         }
+    }
+
+    private BacnetDevice GetDevice(XDocument document)
+    {
+        var exportedObjectsElement = _importDocument.Root?.Element("ExportedObjects");
+
+        var deviceElement = ParseLib.GetElement(
+            "OI", 
+            "TYPE", 
+            "bacnet.DeviceProxy", 
+            exportedObjectsElement);
+            
+        return new BacnetDevice(deviceElement);
     }
 }
