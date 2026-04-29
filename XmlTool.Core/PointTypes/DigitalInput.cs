@@ -22,17 +22,17 @@ public class DigitalInput : BacnetPoint
 
     public DigitalInput(XElement pointElement)
     {
-        ActiveText = pointElement.Element("ActiveText")?.Value;
-        AlarmMessage = pointElement.Element("AlarmMessage")?.Value;
-        BACnetName = pointElement.Element("BACnetName")?.Value;
-        DeviceType = pointElement.Element("DeviceType")?.Value;
-        EventEnable = int.Parse(pointElement.Element("EventEnable")?.Value);
-        FaultMessage = pointElement.Element("FaultMessage")?.Value;
-        ForeignAddress = pointElement.Element("ForeignAddress")?.Value;
-        InactiveText = pointElement.Element("InactiveText")?.Value;
-        NotifyType = int.Parse(pointElement.Element("NotifyType")?.Value);
-        Polarity = int.Parse(pointElement.Element("Polarity")?.Value);
-        ResetMessage = pointElement.Element("ResetMessage")?.Value;
-        TimeDelay = int.Parse(pointElement.Element("TimeDelay")?.Value);
+        ActiveText = ParseLib.GetProperty(pointElement, "ActiveText", "Value").Value;
+        AlarmMessage = ParseLib.GetProperty(pointElement, "AlarmMessage", "Value").Value;
+        BACnetName = ParseLib.GetProperty(pointElement, "BACnetName", "Value").Value;
+        DeviceType = ParseLib.GetProperty(pointElement, "DeviceType", "Value").Value;
+        EventEnable = int.Parse(ParseLib.GetProperty(pointElement, "EventEnable", "Value").Value);
+        FaultMessage = ParseLib.GetProperty(pointElement, "FaultMessage", "Value").Value;
+        ForeignAddress = ParseLib.GetProperty(pointElement, "ForeignAddress", "Value").Value;
+        InactiveText = ParseLib.GetProperty(pointElement, "InactiveText", "Value").Value;
+        NotifyType = int.Parse(ParseLib.GetProperty(pointElement, "NotifyType", "Value").Value);
+        Polarity = int.Parse(ParseLib.GetProperty(pointElement, "Polarity", "Value").Value);
+        ResetMessage = ParseLib.GetProperty(pointElement, "ResetMessage", "Value").Value;
+        TimeDelay = int.Parse(ParseLib.GetProperty(pointElement, "TimeDelay", "Value").Value);
     }
 }
