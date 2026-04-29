@@ -4,6 +4,9 @@ namespace XmlTool.Core.PointTypes;
 
 public class AnalogValue : BacnetPoint
 {
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public string Type { get; set; }
     public string AlarmMessage { get; set; }
     public string BACnetName { get; set; }
     public COVIncrement COVIncrement { get; set; }
@@ -41,56 +44,59 @@ public class AnalogValue : BacnetPoint
 
     public AnalogValue(XElement pointElement)
     {
-        AlarmMessage = pointElement.Element("AlarmMessage").Value;
-        BACnetName = pointElement.Element("BACnetName").Value;
+        Name = ParseLib.ParseString(pointElement, "NAME");
+        Description = ParseLib.ParseString(pointElement, "DESCR");
+        Type = ParseLib.ParseString(pointElement, "TYPE");
+        AlarmMessage = ParseLib.GetProperty(pointElement, "AlarmMessage", "Value").Value;
+        BACnetName = ParseLib.GetProperty(pointElement, "BACnetName", "Value").Value;
         COVIncrement = new COVIncrement
         {
-            Unit = pointElement.Element("COVIncrementUnit").Value,
-            Value = float.Parse(pointElement.Element("COVIncrementValue").Value)
+            Unit = ParseLib.GetProperty(pointElement, "COVIncrement", "Unit").Value,
+            Value = float.Parse(ParseLib.GetProperty(pointElement, "COVIncrement", "Value").Value)
         };
-        Deadband = float.Parse(pointElement.Element("Deadband").Value);
-        DeviceType = pointElement.Element("DeviceType").Value;
-        EventEnable = int.Parse(pointElement.Element("EventEnable").Value);
-        FaultMessage = pointElement.Element("FaultMessage").Value;
-        ForeignAddress = pointElement.Element("ForeignAddress").Value;
-        HighLimit = float.Parse(pointElement.Element("HighLimit").Value);
-        LimitEnable = int.Parse(pointElement.Element("LimitEnable").Value);
-        LowLimit = float.Parse(pointElement.Element("LowLimit").Value);
+        Deadband = float.Parse(ParseLib.GetProperty(pointElement,"Deadband", "Value").Value);
+        DeviceType = ParseLib.GetProperty(pointElement, "DeviceType", "Value").Value;
+        EventEnable = int.Parse(ParseLib.GetProperty(pointElement, "EventEnable", "Value").Value);
+        FaultMessage = ParseLib.GetProperty(pointElement, "FaultMessage", "Value").Value;
+        ForeignAddress = ParseLib.GetProperty(pointElement, "ForeignAddress", "Value").Value;
+        HighLimit = float.Parse(ParseLib.GetProperty(pointElement, "HighLimit", "Value").Value);
+        LimitEnable = int.Parse(ParseLib.GetProperty(pointElement, "LimitEnable", "Value").Value);
+        LowLimit = float.Parse(ParseLib.GetProperty(pointElement, "LowLimit", "Value").Value);
         MaxPresValue = new MaxPresValue()
         {
-            Unit = pointElement.Element("MaxPresUnit").Value,
-            Value = float.Parse(pointElement.Element("MaxPresValue").Value)
+            Unit = ParseLib.GetProperty(pointElement, "MaxPresValue", "Unit").Value,
+            Value = float.Parse(ParseLib.GetProperty(pointElement, "MaxPresValue", "Value").Value)
         };
-        MinPresValue = new MinPresValue()
+        MinPresValue = new MinPresValue()  
         {
-            Unit = pointElement.Element("MinPresUnit").Value,
-            Value = float.Parse(pointElement.Element("MinPresValue").Value)
+            Unit = ParseLib.GetProperty(pointElement, "MinPresValue", "Unit").Value,
+            Value = float.Parse(ParseLib.GetProperty(pointElement, "MinPresValue", "Value").Value)
         };
-        NotifyTpe = int.Parse(pointElement.Element("NotifyTpe").Value);
-        Priority1 = pointElement.Element("Priority1").Value;
-        Priority2 = pointElement.Element("Priority2").Value;
-        Priority3 = pointElement.Element("Priority3").Value;
-        Priority4 = pointElement.Element("Priority4").Value;
-        Priority5 = pointElement.Element("Priority5").Value;
-        Priority6 = pointElement.Element("Priority6").Value;
-        Priority7 = pointElement.Element("Priority7").Value;
-        Priority8 = pointElement.Element("Priority8").Value;
-        Priority9 = pointElement.Element("Priority9").Value;
-        Priority10 = pointElement.Element("Priority10").Value;
-        Priority11 = pointElement.Element("Priority11").Value;
-        Priority12 = pointElement.Element("Priority12").Value;
-        Priority13 = pointElement.Element("Priority13").Value;
-        Priority14 = pointElement.Element("Priority14").Value;
-        Priority15 = pointElement.Element("Priority15").Value;
-        Priority16 = pointElement.Element("Priority16").Value;
+        NotifyTpe = int.Parse(ParseLib.GetProperty(pointElement, "NotifyType", "Value").Value);
+        Priority1 = ParseLib.GetProperty(pointElement, "Priority1", "Value").Value;
+        Priority2 = ParseLib.GetProperty(pointElement, "Priority2", "Value").Value;
+        Priority3 = ParseLib.GetProperty(pointElement, "Priority3", "Value").Value;
+        Priority4 = ParseLib.GetProperty(pointElement, "Priority4", "Value").Value;
+        Priority5 = ParseLib.GetProperty(pointElement, "Priority5", "Value").Value;
+        Priority6 = ParseLib.GetProperty(pointElement, "Priority6", "Value").Value;
+        Priority7 = ParseLib.GetProperty(pointElement, "Priority7", "Value").Value;
+        Priority8 = ParseLib.GetProperty(pointElement, "Priority8", "Value").Value;
+        Priority9 = ParseLib.GetProperty(pointElement, "Priority9", "Value").Value;
+        Priority10 = ParseLib.GetProperty(pointElement, "Priority10", "Value").Value;
+        Priority11 = ParseLib.GetProperty(pointElement, "Priority11", "Value").Value;
+        Priority12 = ParseLib.GetProperty(pointElement, "Priority12", "Value").Value;
+        Priority13 = ParseLib.GetProperty(pointElement, "Priority13", "Value").Value;
+        Priority14 = ParseLib.GetProperty(pointElement, "Priority14", "Value").Value;
+        Priority15 = ParseLib.GetProperty(pointElement, "Priority15", "Value").Value;
+        Priority16 = ParseLib.GetProperty(pointElement, "Priority16", "Value").Value;
         RelinquishDefault = new RelinquishDefault()
         {
-            Unit = pointElement.Element("RelinquishDefaultUnit").Value,
-            Value = float.Parse(pointElement.Element("RelinquishDefaultValue").Value)
+            Unit = ParseLib.GetProperty(pointElement, "RelinquishDefault", "Unit").Value,
+            Value = float.Parse(ParseLib.GetProperty(pointElement, "RelinquishDefault", "Value").Value)
         };
-        ResetMessage = pointElement.Element("ResetMessage").Value;
-        TimeDelay = int.Parse(pointElement.Element("TimeDelay").Value);
-        Value = pointElement.Element("Value").Value;
+        ResetMessage = ParseLib.GetProperty(pointElement, "ResetMessage", "Value").Value;
+        TimeDelay = int.Parse(ParseLib.GetProperty(pointElement, "TimeDelay", "Value").Value);
+        Value = ParseLib.GetProperty(pointElement, "Value", "Value").Value;
     }
 }
 

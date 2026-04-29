@@ -37,4 +37,10 @@ public static class ParseLib
         }
         return doc.Elements(elementName).Where(n => n.Attribute(attribute).Value.Contains(identifier));
     }
+
+    public static XAttribute? GetProperty(XElement? parentElement, string property, string attribute)
+    {
+        var propertyElement = GetElement("PI", "Name", property, parentElement);
+        return  propertyElement?.Attribute(attribute);
+    }
 }

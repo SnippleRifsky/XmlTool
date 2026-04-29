@@ -4,6 +4,9 @@ namespace XmlTool.Core.PointTypes;
 
 public class AnalogInput : BacnetPoint
 {
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public string Type { get; set; }
     public string AlarmMessage { get; set; }
     public string BACnetName { get; set; }
     public COVIncrement COVIncrement { get; set; }
@@ -26,37 +29,40 @@ public class AnalogInput : BacnetPoint
 
     public AnalogInput(XElement pointElement)
     {
-        AlarmMessage = pointElement.Attribute("AlarmMessage")?.Value;
-        BACnetName = pointElement.Attribute("BACnetName")?.Value;
+        Name = ParseLib.ParseString(pointElement, "NAME");
+        Description = ParseLib.ParseString(pointElement, "DESCR");
+        Type = ParseLib.ParseString(pointElement, "TYPE");
+        AlarmMessage = ParseLib.GetProperty(pointElement, "AlarmMessage", "Value").Value;
+        BACnetName = ParseLib.GetProperty(pointElement, "BACnetName", "Value").Value;
         COVIncrement = new COVIncrement
         {
-            Unit = pointElement.Attribute("COVIncrementUnit")?.Value,
-            Value = float.Parse(pointElement.Attribute("COVIncrementValue")?.Value)
+            Unit = ParseLib.GetProperty(pointElement, "COVIncrement", "Unit").Value,
+            Value = float.Parse(ParseLib.GetProperty(pointElement, "COVIncrement", "Value").Value)
         };
-        Deadband = float.Parse(pointElement.Attribute("Deadband")?.Value);
-        DeviceType = pointElement.Attribute("DeviceType")?.Value;
-        EventEnable = int.Parse(pointElement.Attribute("EventEnable")?.Value);
-        FaultMessage = pointElement.Attribute("FaultMessage")?.Value;
-        ForeignAddress = pointElement.Attribute("ForeignAddress")?.Value;
-        HighLimit = float.Parse(pointElement.Attribute("HighLimit")?.Value);
-        LimitEnable = int.Parse(pointElement.Attribute("LimitEnable")?.Value);
-        LowLimit = float.Parse(pointElement.Attribute("LowLimit")?.Value);
+        Deadband = float.Parse(ParseLib.GetProperty(pointElement,"Deadband", "Value").Value);
+        DeviceType = ParseLib.GetProperty(pointElement, "DeviceType", "Value").Value;
+        EventEnable = int.Parse(ParseLib.GetProperty(pointElement, "EventEnable", "Value").Value);
+        FaultMessage = ParseLib.GetProperty(pointElement, "FaultMessage", "Value").Value;
+        ForeignAddress = ParseLib.GetProperty(pointElement, "ForeignAddress", "Value").Value;
+        HighLimit = float.Parse(ParseLib.GetProperty(pointElement, "HighLimit", "Value").Value);
+        LimitEnable = int.Parse(ParseLib.GetProperty(pointElement, "LimitEnable", "Value").Value);
+        LowLimit = float.Parse(ParseLib.GetProperty(pointElement, "LowLimit", "Value").Value);
         MaxPresValue = new MaxPresValue()
         {
-            Unit = pointElement.Attribute("MaxPresUnit")?.Value,
-            Value = float.Parse(pointElement.Attribute("MaxPresValue")?.Value)
+            Unit = ParseLib.GetProperty(pointElement, "MaxPresValue", "Unit").Value,
+            Value = float.Parse(ParseLib.GetProperty(pointElement, "MaxPresValue", "Value").Value)
         };
         MinPresValue = new MinPresValue()  
         {
-            Unit = pointElement.Attribute("MinPresUnit")?.Value,
-            Value = float.Parse(pointElement.Attribute("MinPresValue")?.Value)
+            Unit = ParseLib.GetProperty(pointElement, "MinPresValue", "Unit").Value,
+            Value = float.Parse(ParseLib.GetProperty(pointElement, "MinPresValue", "Value").Value)
         };
-        NotifyTpe = int.Parse(pointElement.Attribute("NotifyTpe")?.Value);
-        ResetMessage = pointElement.Attribute("ResetMessage")?.Value;
-        Resolution = float.Parse(pointElement.Attribute("Resolution")?.Value);
-        TimeDelay = int.Parse(pointElement.Attribute("TimeDelay")?.Value);
-        UpdateInterval = int.Parse(pointElement.Attribute("UpdateInterval")?.Value);
-        Value = pointElement.Attribute("Value")?.Value;
+        NotifyTpe = int.Parse(ParseLib.GetProperty(pointElement, "NotifyType", "Value").Value);
+        ResetMessage = ParseLib.GetProperty(pointElement, "ResetMessage", "Value").Value;
+        Resolution = float.Parse(ParseLib.GetProperty(pointElement, "Resolution", "Value").Value);
+        TimeDelay = int.Parse(ParseLib.GetProperty(pointElement, "TimeDelay", "Value").Value);
+        UpdateInterval = int.Parse(ParseLib.GetProperty(pointElement, "UpdateInterval", "Value").Value);
+        Value = ParseLib.GetProperty(pointElement, "Value", "Value").Value;
     }
 }
 
